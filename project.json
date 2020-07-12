@@ -3,12 +3,15 @@
   "description": "Extract invoice data from e-automate and enter into quickbooks pro, using UIPath Robotic Enterprise Framework",
   "main": "Main.xaml",
   "dependencies": {
+    "Date.Activities": "[1.0.0]",
     "UiPath.Credentials.Activities": "[1.1.6479.13204]",
     "UiPath.Excel.Activities": "[2.8.5]",
     "UiPath.System.Activities": "[20.4.0]",
-    "UiPath.UIAutomation.Activities": "[20.4.1]"
+    "UiPath.UIAutomation.Activities": "[20.4.1]",
+    "UiPathTeam.FileWatcher.Activities": "[1.4.0]"
   },
   "webServices": [],
+  "entitiesStores": [],
   "schemaVersion": "4.0",
   "studioVersion": "20.4.1.0",
   "projectVersion": "1.0.0",

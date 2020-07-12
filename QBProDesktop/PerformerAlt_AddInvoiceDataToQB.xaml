@@ -1,0 +1,787 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="PerformerAlt_AddInvoiceDataToQB" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1076,4511" sap2010:WorkflowViewState.IdRef="PerformerAlt_AddInvoiceDataToQB_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:p="http://schemas.uipath.com/workflow/activities/cv" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing" xmlns:uc="clr-namespace:UiPath.CV;assembly=UiPath.CV" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="24">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.CV</x:String>
+      <x:String>UiPath.Vision.OCR</x:String>
+      <x:String>UiPath.OCR.Contracts</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="26">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.CV</AssemblyReference>
+      <AssemblyReference>UiPath.Vision.Core</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Contracts</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Takes Transaction Items argument and inputs each item as invoice data to QuickBooksPro.&#xA;&#xA;Precondition:  Logged-in to QuickBooks home screen&#xA;Post-Action:  Logs success and prints invoices to .pdf" DisplayName="PerformerAlt_AddInvoiceDataToQB" sap:VirtualizedContainerService.HintSize="873,4346" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="CustomerNumber" />
+      <Variable x:TypeArguments="x:String" Name="InvoiceNumber" />
+      <Variable x:TypeArguments="x:String" Name="TotalAmount" />
+      <Variable x:TypeArguments="x:Boolean" Name="InvoiceFormLoaded" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="831,160" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign.AssignOperations>
+        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[CustomerNumber]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">EE02</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[InvoiceNumber]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">45722</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[TotalAmount]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">30.64</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+        </scg:List>
+      </ui:MultipleAssign.AssignOperations>
+    </ui:MultipleAssign>
+    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" sap2010:Annotation.AnnotationText="This and the multiple assign activities need to be broken out into a separate workflow (so REF won't run the 'navigate-to' steps before each Trans Item).&#xD;&#xA;&#xD;&#xA;Also, preceed with an If activity to check for trans-items &gt; 0 before executing the workflow." DisplayName="Navigate to 'Create Invoice' Form" sap:VirtualizedContainerService.HintSize="831,494" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="d56ce3d5878027b54cddbccf309c515f" Selector="&lt;wnd app='qbw32.exe' cls='MauiFrame' title='FBS Demo  - QuickBooks Desktop Pro 2020 - [Home ]' /&gt;">
+      <ui:WindowScope.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,246" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SpecialKey="{x:Null}" Activate="True" DelayMS="800" DisplayName="Send Hotkey" sap:VirtualizedContainerService.HintSize="334,154" sap2010:WorkflowViewState.IdRef="SendHotkey_1" Key="i" KeyModifiers="Ctrl">
+              <ui:SendHotkey.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="6e33448e-8b4b-484f-bac0-32148db7e4bf" InformativeScreenshot="78981b904c7e60751621a648bc103e19" WaitForReady="NONE">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                </ui:Target>
+              </ui:SendHotkey.Target>
+            </ui:SendHotkey>
+          </Sequence>
+        </ActivityAction>
+      </ui:WindowScope.Body>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:WindowScope>
+    <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window_Create Invoices Form" sap:VirtualizedContainerService.HintSize="831,1766" sap2010:WorkflowViewState.IdRef="WindowScope_2" InformativeScreenshot="1a2a198f5ce3d3e68fa3a10a87a4da8c" Selector="&lt;wnd app='qbw32.exe' cls='MauiFrame' title='FBS Demo  - QuickBooks Desktop Pro 2020*' /&gt;&lt;wnd cls='MauiForm' title='Create Invoices' /&gt;">
+      <ui:WindowScope.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="797,1620" sap2010:WorkflowViewState.IdRef="Sequence_8">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:UiElementExists DisplayName="Confirm 'Create Invoice' Form Loaded" Exists="[InvoiceFormLoaded]" sap:VirtualizedContainerService.HintSize="755,106" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
+              <ui:UiElementExists.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="c6374881-d461-4d3e-9679-7b527c89b5b1" InformativeScreenshot="34642d179c53197fe9ce5fbea96e553c" Selector="&lt;ctrl name='Create Invoices' role='client' /&gt;" WaitForReady="COMPLETE">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                </ui:Target>
+              </ui:UiElementExists.Target>
+            </ui:UiElementExists>
+            <If Condition="[InvoiceFormLoaded]" sap:VirtualizedContainerService.HintSize="755,476" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Then>
+                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Create Invoice form loaded.  Attempting data-input.&quot;]" />
+              </If.Then>
+              <If.Else>
+                <Sequence sap:VirtualizedContainerService.HintSize="376,329" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Create Invoice form not found.  Close application and retry.&quot;]" />
+                  <ui:CloseApplication DisplayName="Close Application 'QBW32.EXE FBS'" sap:VirtualizedContainerService.HintSize="334,106" sap2010:WorkflowViewState.IdRef="CloseApplication_1">
+                    <ui:CloseApplication.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="efdb6c38-cd98-426d-843f-8d6b67819da4" InformativeScreenshot="169c13037c3cbe33454f23fdbc7e2adc">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:CloseApplication.Target>
+                  </ui:CloseApplication>
+                </Sequence>
+              </If.Else>
+            </If>
+            <ui:TypeInto AlterIfDisabled="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="False" ClickBeforeTyping="True" DelayMS="2000" DisplayName="Enter Customer Number" EmptyField="True" sap:VirtualizedContainerService.HintSize="755,134" sap2010:WorkflowViewState.IdRef="TypeInto_1" Text="[CustomerNumber]">
+              <ui:TypeInto.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="a53ebd39-bb05-46e2-8d5f-99cacb33c6dc" InformativeScreenshot="6c95d2a4b5e178a48553d1523e1d54e9" Selector="&lt;wnd app='qbw32.exe' cls='MauiFrame' title='FBS Demo  - QuickBooks Desktop Pro 2020 - [Create Invoices]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='MauiForm' title='Create Invoices' /&gt;&lt;wnd cls='Edit' idx='1' /&gt;">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:TypeInto.Target>
+            </ui:TypeInto>
+            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" Activate="False" DelayMS="2000" DisplayName="Press 'down arrow'" sap:VirtualizedContainerService.HintSize="755,154" sap2010:WorkflowViewState.IdRef="SendHotkey_6" Key="down" KeyModifiers="None" SpecialKey="True">
+              <ui:SendHotkey.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="090b351c-b55e-447c-b7d6-37b867c590fa" InformativeScreenshot="92539394fecaa1585ca95ee19976cf04" Selector="&lt;wnd app='qbw32.exe' cls='MauiFrame' title='FBS Demo  - QuickBooks Desktop Pro 2020 - [Create Invoices]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='MauiForm' title='Create Invoices' /&gt;&lt;ctrl idx='3' role='window' /&gt;">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:SendHotkey.Target>
+            </ui:SendHotkey>
+            <ui:SendHotkey ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" Activate="True" DisplayName="Press Tab Key" sap:VirtualizedContainerService.HintSize="755,154" sap2010:WorkflowViewState.IdRef="SendHotkey_7" Key="tab" KeyModifiers="None" SpecialKey="True">
+              <ui:SendHotkey.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="c4d98602-b9c1-42fb-ac19-1404cd048d1c" InformativeScreenshot="16166369f77589e445d0198c7200b045" Selector="&lt;wnd app='qbw32.exe' cls='MauiFrame' title='FBS Demo  - QuickBooks Desktop Pro 2020 - [Create Invoices]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='MauiForm' title='Create Invoices' /&gt;&lt;ctrl name='Create Invoices' role='client' /&gt;">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </ui:SendHotkey.Target>
+            </ui:SendHotkey>
+            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="755,304" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+              <ui:CommentOut.Body>
+                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="376,226" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:TypeInto Activate="{x:Null}" AlterIfDisabled="{x:Null}" ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" DelayMS="1000" DisplayName="Press Tab Key" sap:VirtualizedContainerService.HintSize="334,134" sap2010:WorkflowViewState.IdRef="TypeInto_2" Text="%[k(tab)]">
+                    <ui:TypeInto.Target>
+                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Id="bbc6ae93-3b72-4692-9a9a-649b24cd880c" InformativeScreenshot="15ec00293baa7fc3af5432a77d7e15eb" Selector="&lt;wnd app='qbw32.exe' cls='MauiFrame' title='FBS Demo  - QuickBooks Desktop Pro 2020 - [Create Invoices]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='MauiForm' title='Create Invoices' /&gt;&lt;ctrl name='Create Invoices' role='client' /&gt;">
+                        <ui:Target.TimeoutMS>
+                          <InArgument x:TypeArguments="x:Int32" />
+                        </ui:Target.TimeoutMS>
+                        <ui:Target.WaitForReady>
+                          <InArgument x:TypeArguments="ui:WaitForReady" />
+                        </ui:Target.WaitForReady>
+                      </ui:Target>
+                    </ui:TypeInto.Target>
+                  </ui:TypeInto>
+                </Sequence>
+              </ui:CommentOut.Body>
+            </ui:CommentOut>
+          </Sequence>
+        </ActivityAction>
+      </ui:WindowScope.Body>
+    </ui:WindowScope>
+    <p:CVScope ContinueOnError="{x:Null}" DelayBefore="{x:Null}" Server="{x:Null}" DisplayName="CV Screen Scope 'client  Create Invoices'" sap:VirtualizedContainerService.HintSize="831,554" sap2010:WorkflowViewState.IdRef="CVScope_5" Version="V1">
+      <p:CVScope.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="CVSessionData" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_9">
+            <p:CvTypeIntoWithDescriptor SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" Descriptor="[&quot;Target: InputBox (1201,80,105,26)&quot; +&#xD;&#xA;&quot;Anchor: Text 'INVOICE;' (1201,69,47,7)&quot;]" DesignTimeScaleFactor="1" DisplayName="CV Type Into - InvoiceNumber" EmptyField="True" sap:VirtualizedContainerService.HintSize="400,134" sap2010:WorkflowViewState.IdRef="CvTypeIntoWithDescriptor_9" InformativeScreenshot="ed12f943d336ab90742f63849af0be51" Text="[InvoiceNumber]" Version="V1">
+              <p:CvTypeIntoWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor InformativeScreenshot="ed12f943d336ab90742f63849af0be51">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor DesignTimeArea="1201, 69, 47, 7" ElementType="Text" Text="INVOICE;" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor DesignTimeArea="1201, 80, 105, 26" ElementType="InputBox" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvTypeIntoWithDescriptor.DesignTimeDescriptor>
+              <p:CvTypeIntoWithDescriptor.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="168a40e9-4435-40a1-84be-f6dde4190709">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </p:CvTypeIntoWithDescriptor.Target>
+            </p:CvTypeIntoWithDescriptor>
+            <p:CvTypeIntoWithDescriptor SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" Descriptor="[&quot;Target: Cell (17,198,135,22)&quot; +&#xD;&#xA;&quot;Anchor: Text 'QUANTITY' (27,190,54,7)&quot;]" DesignTimeScaleFactor="1" DisplayName="CV Type Into - Quantity" EmptyField="True" sap:VirtualizedContainerService.HintSize="400,134" sap2010:WorkflowViewState.IdRef="CvTypeIntoWithDescriptor_10" InformativeScreenshot="bf8b52955cac589654e7d8cd7dcca44f" Text="[&quot;1&quot;]" Version="V1">
+              <p:CvTypeIntoWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor InformativeScreenshot="bf8b52955cac589654e7d8cd7dcca44f">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor DesignTimeArea="27, 190, 54, 7" ElementType="Text" Text="QUANTITY" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor DesignTimeArea="17, 198, 135, 22" ElementType="Cell" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvTypeIntoWithDescriptor.DesignTimeDescriptor>
+              <p:CvTypeIntoWithDescriptor.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="91f150b5-5cb3-4f77-a1d9-6b7520e07a61">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </p:CvTypeIntoWithDescriptor.Target>
+            </p:CvTypeIntoWithDescriptor>
+          </Sequence>
+        </ActivityAction>
+      </p:CVScope.Body>
+      <p:CVScope.DesignTimeCache>
+        <uc:CVCache InformativeScreenshot="cea77d0f020c44933a923e49e9dd58f2" LogicalPosition="246, -889" OcrText="I ' DATE BILLTO SHIPTO [ v]&#xD;&#xA;n V0 I CG [07/06/2020 a]&#xD;&#xA;INVOICE;&#xD;&#xA;[45723 ]&#xD;&#xA;P.O. NUMBER TERMS REP SHIP VIA F.O.B.&#xD;&#xA;l 11 '11 4107/06/20” E11 '11 1&#xD;&#xA;QUANTITY E ITEM CODE E DESCRIPTION E PRICE EACH E AMOUNT A] | | | | | IT" Position="246, -889" ScreenshotGuid="7e088666-fb83-43b3-b791-f09f374306ac" ServerVersion="1">
+          <uc:CVCache.CvTables>
+            <x:Array Type="uc:CvTableInfo">
+              <uc:CvTableInfo>
+                <uc:CvTableInfo.Columns>
+                  <x:Array Type="x:Int32">
+                    <x:Int32>1236</x:Int32>
+                    <x:Int32>1351</x:Int32>
+                    <x:Int32>1625</x:Int32>
+                  </x:Array>
+                </uc:CvTableInfo.Columns>
+                <uc:CvTableInfo.Rows>
+                  <x:Array Type="x:Int32">
+                    <x:Int32>177</x:Int32>
+                    <x:Int32>197</x:Int32>
+                    <x:Int32>220</x:Int32>
+                    <x:Int32>231</x:Int32>
+                  </x:Array>
+                </uc:CvTableInfo.Rows>
+              </uc:CvTableInfo>
+              <uc:CvTableInfo>
+                <uc:CvTableInfo.Columns>
+                  <x:Array Type="x:Int32">
+                    <x:Int32>17</x:Int32>
+                    <x:Int32>152</x:Int32>
+                    <x:Int32>241</x:Int32>
+                    <x:Int32>1221</x:Int32>
+                  </x:Array>
+                </uc:CvTableInfo.Columns>
+                <uc:CvTableInfo.Rows>
+                  <x:Array Type="x:Int32">
+                    <x:Int32>179</x:Int32>
+                    <x:Int32>198</x:Int32>
+                    <x:Int32>220</x:Int32>
+                    <x:Int32>231</x:Int32>
+                  </x:Array>
+                </uc:CvTableInfo.Rows>
+              </uc:CvTableInfo>
+            </x:Array>
+          </uc:CVCache.CvTables>
+          <uc:CVCache.CvUiElements>
+            <scg:List x:TypeArguments="uc:CvElementInfo" Capacity="64">
+              <uc:CvElementInfo Category="InputBox" Region="1201, 35, 105, 24" />
+              <uc:CvElementInfo Category="InputBox" Region="1028, 145, 98, 26" />
+              <uc:CvElementInfo Category="InputBox" Region="1530, 146, 107, 26" />
+              <uc:CvElementInfo Category="InputBox" Region="1493, 39, 142, 81" />
+              <uc:CvElementInfo Category="ArrowButton" Region="1620, 202, 19, 18" />
+              <uc:CvElementInfo Category="InputBox" Region="1201, 80, 105, 26" />
+              <uc:CvElementInfo Category="Icon" Region="1406, 151, 14, 14" />
+              <uc:CvElementInfo Category="InputBox" Region="1325, 39, 149, 84" />
+              <uc:CvElementInfo Category="Icon" Region="1288, 40, 14, 14" />
+              <uc:CvElementInfo Category="Cell" Region="1236, 177, 115, 20" />
+              <uc:CvElementInfo Category="Cell" Region="152, 198, 89, 22" />
+              <uc:CvElementInfo Category="Cell" Region="1236, 197, 115, 23" />
+              <uc:CvElementInfo Category="Cell" Region="17, 179, 135, 19" />
+              <uc:CvElementInfo Category="Cell" Region="152, 220, 89, 11" />
+              <uc:CvElementInfo Category="Cell" Region="1351, 177, 274, 20" />
+              <uc:CvElementInfo Category="Cell" Region="17, 198, 135, 22" />
+              <uc:CvElementInfo Category="Cell" Region="1236, 220, 115, 11" />
+              <uc:CvElementInfo Category="Cell" Region="152, 179, 89, 19" />
+              <uc:CvElementInfo Category="Cell" Region="1351, 197, 274, 23" />
+              <uc:CvElementInfo Category="Cell" Region="1126, 124, 105, 21" />
+              <uc:CvElementInfo Category="Cell" Region="17, 220, 135, 11" />
+              <uc:CvElementInfo Category="Cell" Region="1026, 127, 100, 18" />
+              <uc:CvElementInfo Category="Cell" Region="241, 198, 980, 22" />
+              <uc:CvElementInfo Category="Cell" Region="1351, 220, 274, 11" />
+              <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="20, 204, 137, 24" />
+              <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="1493, 40, 142, 82" />
+              <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="1350, 202, 277, 27" />
+              <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="1200, 79, 106, 26" />
+              <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="1326, 146, 98, 24" />
+              <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="1533, 146, 103, 26" />
+              <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="1201, 36, 105, 24" />
+              <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="1030, 145, 95, 25" />
+              <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="1323, 40, 147, 81" />
+              <uc:CvElementInfo Category="InputBox" Region="1533, 15, 103, 21" />
+              <uc:CvElementInfo Category="InputBox" Region="1233, 146, 90, 25" />
+              <uc:CvElementInfo Category="InputBox" Region="1127, 145, 106, 26" />
+              <uc:CvElementInfo Category="InputBox" Region="1423, 146, 107, 25" />
+              <uc:CvElementInfo Category="InputBox" Region="1326, 146, 96, 24" />
+              <uc:CvElementInfo Category="ArrowButton" Region="1616, 15, 18, 19" />
+              <uc:CvElementInfo Category="ArrowButton" Region="1212, 147, 19, 23" />
+              <uc:CvElementInfo Category="ArrowButton" Region="1510, 147, 19, 23" />
+              <uc:CvElementInfo Category="ArrowButton" Region="1304, 148, 17, 21" />
+              <uc:CvElementInfo Category="ArrowButton" Confidence="Runtime" Region="1406, 151, 13, 14" />
+            </scg:List>
+          </uc:CVCache.CvUiElements>
+          <uc:CVCache.OcrTexts>
+            <scg:List x:TypeArguments="uc:OcrTextInfo" Capacity="64">
+              <uc:OcrTextInfo Region="22, 25, 4, 27" Text="I" />
+              <uc:OcrTextInfo Region="89, 25, 4, 3" Text="'" />
+              <uc:OcrTextInfo Region="1201, 24, 23, 7" Text="DATE" />
+              <uc:OcrTextInfo Region="1324, 28, 34, 7" Text="BILLTO" />
+              <uc:OcrTextInfo Region="1488, 28, 38, 7" Text="SHIPTO" />
+              <uc:OcrTextInfo Region="1532, 16, 3, 18" Text="[" />
+              <uc:OcrTextInfo Region="1620, 16, 16, 18" Text="v]" />
+              <uc:OcrTextInfo Region="31, 32, 16, 20" Text="n" />
+              <uc:OcrTextInfo Region="50, 32, 36, 20" Text="V0" />
+              <uc:OcrTextInfo Region="89, 32, 4, 20" Text="I" />
+              <uc:OcrTextInfo Region="96, 32, 36, 20" Text="CG" />
+              <uc:OcrTextInfo Region="1200, 37, 65, 22" Text="[07/06/2020" />
+              <uc:OcrTextInfo Region="1288, 37, 18, 22" Text="a]" />
+              <uc:OcrTextInfo Region="1201, 69, 47, 7" Text="INVOICE;" />
+              <uc:OcrTextInfo Region="1200, 82, 38, 22" Text="[45723" />
+              <uc:OcrTextInfo Region="1303, 82, 3, 22" Text="]" />
+              <uc:OcrTextInfo Region="1030, 134, 17, 7" Text="P.O." />
+              <uc:OcrTextInfo Region="1051, 134, 40, 7" Text="NUMBER" />
+              <uc:OcrTextInfo Region="1127, 134, 32, 7" Text="TERMS" />
+              <uc:OcrTextInfo Region="1234, 134, 19, 7" Text="REP" />
+              <uc:OcrTextInfo Region="1324, 134, 23, 7" Text="SHIP" />
+              <uc:OcrTextInfo Region="1424, 134, 16, 7" Text="VIA" />
+              <uc:OcrTextInfo Region="1531, 134, 26, 7" Text="F.O.B." />
+              <uc:OcrTextInfo Region="1029, 147, 3, 22" Text="l" />
+              <uc:OcrTextInfo Region="1124, 147, 6, 22" Text="11" />
+              <uc:OcrTextInfo Region="1217, 147, 19, 22" Text="'11" />
+              <uc:OcrTextInfo Region="1308, 147, 81, 22" Text="4107/06/20”" />
+              <uc:OcrTextInfo Region="1406, 147, 21, 22" Text="E11" />
+              <uc:OcrTextInfo Region="1514, 147, 19, 22" Text="'11" />
+              <uc:OcrTextInfo Region="1633, 147, 3, 22" Text="1" />
+              <uc:OcrTextInfo Region="27, 190, 54, 7" Text="QUANTITY" />
+              <uc:OcrTextInfo Region="153, 187, 2, 10" Text="E" />
+              <uc:OcrTextInfo Region="162, 190, 25, 7" Text="ITEM" />
+              <uc:OcrTextInfo Region="190, 190, 30, 7" Text="CODE" />
+              <uc:OcrTextInfo Region="242, 187, 2, 10" Text="E" />
+              <uc:OcrTextInfo Region="251, 190, 69, 7" Text="DESCRIPTION" />
+              <uc:OcrTextInfo Region="1235, 187, 2, 10" Text="E" />
+              <uc:OcrTextInfo Region="1244, 190, 31, 7" Text="PRICE" />
+              <uc:OcrTextInfo Region="1278, 190, 27, 7" Text="EACH" />
+              <uc:OcrTextInfo Region="1353, 187, 2, 10" Text="E" />
+              <uc:OcrTextInfo Region="1361, 190, 45, 7" Text="AMOUNT" />
+              <uc:OcrTextInfo Region="1623, 204, 12, 14" Text="A]" />
+              <uc:OcrTextInfo Region="19, 204, 2, 30" Text="|" />
+              <uc:OcrTextInfo Region="154, 204, 2, 30" Text="|" />
+              <uc:OcrTextInfo Region="243, 204, 2, 30" Text="|" />
+              <uc:OcrTextInfo Region="1236, 204, 2, 30" Text="|" />
+              <uc:OcrTextInfo Region="1354, 204, 2, 30" Text="|" />
+              <uc:OcrTextInfo Region="1620, 204, 15, 30" Text="IT" />
+            </scg:List>
+          </uc:CVCache.OcrTexts>
+        </uc:CVCache>
+      </p:CVScope.DesignTimeCache>
+      <p:CVScope.OCREngine>
+        <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd:Rectangle, x:String))">
+          <ActivityFunc.Argument>
+            <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+          </ActivityFunc.Argument>
+          <ui:GoogleOCR AllowedCharacters="{x:Null}" DeniedCharacters="{x:Null}" FilterRegion="{x:Null}" Invert="{x:Null}" Language="{x:Null}" Output="{x:Null}" Profile="{x:Null}" Scale="{x:Null}" Text="{x:Null}" ComputeSkewAngle="False" DisplayName="Tesseract OCR" ExtractWords="True" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_1" Image="[Image]" />
+        </ActivityFunc>
+      </p:CVScope.OCREngine>
+      <p:CVScope.Target>
+        <ui:Target Element="{x:Null}" Id="edb8b398-9ea5-4c16-a932-a1967626a11e" InformativeScreenshot="222d9a515cc2f3584fd9c9f73459ea14" Selector="&lt;wnd app='qbw32.exe' cls='MauiFrame' title='FBS Demo  - QuickBooks Desktop Pro 2020 - [Create Invoices]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='MauiForm' title='Create Invoices' /&gt;&lt;ctrl name='Create Invoices' role='client' /&gt;" WaitForReady="INTERACTIVE">
+          <ui:Target.ClippingRegion>
+            <ui:Region Rectangle="5, 139, 1644, 234" />
+          </ui:Target.ClippingRegion>
+          <ui:Target.TimeoutMS>
+            <InArgument x:TypeArguments="x:Int32" />
+          </ui:Target.TimeoutMS>
+        </ui:Target>
+      </p:CVScope.Target>
+    </p:CVScope>
+    <p:CVScope ContinueOnError="{x:Null}" DelayBefore="{x:Null}" Server="{x:Null}" DisplayName="CV Screen Scope 'client  Create Invoices'" sap:VirtualizedContainerService.HintSize="831,380" sap2010:WorkflowViewState.IdRef="CVScope_6" Version="V1">
+      <p:CVScope.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="CVSessionData" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_10">
+            <p:CvTypeIntoWithDescriptor SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" Descriptor="[&quot;Target: Cell (21,37,89,23)&quot; +&#xD;&#xA;&quot;Anchor: Text 'ITEM CODE' (28,27,58,7)&quot;]" DesignTimeScaleFactor="1" DisplayName="CV Type Into - Cell" EmptyField="True" sap:VirtualizedContainerService.HintSize="400,134" sap2010:WorkflowViewState.IdRef="CvTypeIntoWithDescriptor_12" InformativeScreenshot="04a964bd4c0aa925f2b18742da96d5b3" Text="[&quot;CPC&quot;]" Version="V1">
+              <p:CvTypeIntoWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor InformativeScreenshot="04a964bd4c0aa925f2b18742da96d5b3">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor DesignTimeArea="28, 27, 58, 7" ElementType="Text" Text="ITEM CODE" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor DesignTimeArea="21, 37, 89, 23" ElementType="Cell" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvTypeIntoWithDescriptor.DesignTimeDescriptor>
+              <p:CvTypeIntoWithDescriptor.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="7fee4e6a-69f8-42da-9bcf-f2ee2c07394f">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </p:CvTypeIntoWithDescriptor.Target>
+            </p:CvTypeIntoWithDescriptor>
+          </Sequence>
+        </ActivityAction>
+      </p:CVScope.Body>
+      <p:CVScope.DesignTimeCache>
+        <uc:CVCache InformativeScreenshot="01659343670f74647a826c0236af8fa8" LogicalPosition="380, -726" OcrText="ITEM CODE" Position="380, -726" ScreenshotGuid="b759af66-8ecf-4301-a4a1-ef2f9bb41bf4" ServerVersion="1">
+          <uc:CVCache.CvTables>
+            <x:Array Type="uc:CvTableInfo">
+              <uc:CvTableInfo>
+                <uc:CvTableInfo.Columns>
+                  <x:Array Type="x:Int32">
+                    <x:Int32>0</x:Int32>
+                    <x:Int32>21</x:Int32>
+                    <x:Int32>110</x:Int32>
+                    <x:Int32>125</x:Int32>
+                  </x:Array>
+                </uc:CvTableInfo.Columns>
+                <uc:CvTableInfo.Rows>
+                  <x:Array Type="x:Int32">
+                    <x:Int32>19</x:Int32>
+                    <x:Int32>37</x:Int32>
+                    <x:Int32>60</x:Int32>
+                    <x:Int32>82</x:Int32>
+                  </x:Array>
+                </uc:CvTableInfo.Rows>
+              </uc:CvTableInfo>
+            </x:Array>
+          </uc:CVCache.CvTables>
+          <uc:CVCache.CvUiElements>
+            <scg:List x:TypeArguments="uc:CvElementInfo" Capacity="16">
+              <uc:CvElementInfo Category="Cell" Region="21, 37, 89, 23" />
+              <uc:CvElementInfo Category="Cell" Region="21, 60, 89, 22" />
+              <uc:CvElementInfo Category="Cell" Region="110, 37, 15, 23" />
+              <uc:CvElementInfo Category="Cell" Region="110, 19, 15, 18" />
+              <uc:CvElementInfo Category="Cell" Region="0, 37, 21, 23" />
+              <uc:CvElementInfo Category="Cell" Region="110, 60, 15, 22" />
+              <uc:CvElementInfo Category="Cell" Region="0, 60, 21, 22" />
+              <uc:CvElementInfo Category="Cell" Region="21, 19, 89, 18" />
+              <uc:CvElementInfo Category="Cell" Region="0, 19, 21, 18" />
+              <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="117, 25, 9, 13" />
+              <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="105, 22, 13, 15" />
+              <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="13, 22, 77, 15" />
+              <uc:CvElementInfo Category="ArrowButton" Confidence="Runtime" Region="117, 26, 8, 11" />
+              <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="115, 24, 11, 14" />
+            </scg:List>
+          </uc:CVCache.CvUiElements>
+          <uc:CVCache.OcrTexts>
+            <scg:List x:TypeArguments="uc:OcrTextInfo" Capacity="4">
+              <uc:OcrTextInfo Region="28, 27, 25, 7" Text="ITEM" />
+              <uc:OcrTextInfo Region="56, 27, 30, 7" Text="CODE" />
+            </scg:List>
+          </uc:CVCache.OcrTexts>
+        </uc:CVCache>
+      </p:CVScope.DesignTimeCache>
+      <p:CVScope.OCREngine>
+        <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd:Rectangle, x:String))">
+          <ActivityFunc.Argument>
+            <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+          </ActivityFunc.Argument>
+          <ui:MicrosoftOCR FilterRegion="{x:Null}" Language="{x:Null}" Output="{x:Null}" Text="{x:Null}" ComputeSkewAngle="False" DisplayName="Microsoft OCR" ExtractWords="True" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="MicrosoftOCR_2" Image="[Image]" Profile="Legacy" Scale="2" />
+        </ActivityFunc>
+      </p:CVScope.OCREngine>
+      <p:CVScope.Target>
+        <ui:Target Element="{x:Null}" Id="1df40b17-1cd1-486e-b9bd-048b6d76e251" InformativeScreenshot="2f12c942c42f6ff6fc3b5a2373305a53" Selector="&lt;wnd app='qbw32.exe' cls='MauiFrame' title='FBS Demo  - QuickBooks Desktop Pro 2020 - [Create Invoices]' /&gt;&lt;wnd aaname='Workspace' cls='MDIClient' /&gt;&lt;wnd cls='MauiForm' title='Create Invoices' /&gt;&lt;ctrl name='Create Invoices' role='client' /&gt;" WaitForReady="INTERACTIVE">
+          <ui:Target.ClippingRegion>
+            <ui:Region Rectangle="139, 302, 126, 84" />
+          </ui:Target.ClippingRegion>
+          <ui:Target.TimeoutMS>
+            <InArgument x:TypeArguments="x:Int32" />
+          </ui:Target.TimeoutMS>
+        </ui:Target>
+      </p:CVScope.Target>
+    </p:CVScope>
+    <p:CVScope ContinueOnError="{x:Null}" DelayBefore="{x:Null}" Server="{x:Null}" DisplayName="CV Screen Scope 'QBW32.EXE FBS'" sap:VirtualizedContainerService.HintSize="831,628" sap2010:WorkflowViewState.IdRef="CVScope_7" Version="V1">
+      <p:CVScope.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="CVSessionData" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_11">
+            <p:CvTypeIntoWithDescriptor SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" ClickBeforeTyping="True" Descriptor="[&quot;Target: Cell (16,23,268,23)&quot; +&#xD;&#xA;&quot;Anchor: Text 'AMOUNT' (23,11,45,7)&quot; +&#xD;&#xA;&quot;Anchor: ArrowButton (282,23,17,15)&quot;]" DesignTimeScaleFactor="1" DisplayName="CV Type Into - Total Amount" EmptyField="True" sap:VirtualizedContainerService.HintSize="400,134" sap2010:WorkflowViewState.IdRef="CvTypeIntoWithDescriptor_13" InformativeScreenshot="649188c164a39ef26be3f61181720eb2" Text="[TotalAmount]" Version="V1">
+              <p:CvTypeIntoWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor InformativeScreenshot="649188c164a39ef26be3f61181720eb2">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor DesignTimeArea="23, 11, 45, 7" ElementType="Text" Text="AMOUNT" />
+                      <uc:CvElementDescriptor DesignTimeArea="282, 23, 17, 15" ElementType="ArrowButton" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor DesignTimeArea="16, 23, 268, 23" ElementType="Cell" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvTypeIntoWithDescriptor.DesignTimeDescriptor>
+              <p:CvTypeIntoWithDescriptor.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="d2e279b0-dcb5-46b5-b67d-17f3b53cbe2a">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </p:CvTypeIntoWithDescriptor.Target>
+            </p:CvTypeIntoWithDescriptor>
+            <p:CvClickWithDescriptor DelayBefore="{x:Null}" DelayMS="{x:Null}" SendWindowMessages="{x:Null}" SimulateClick="{x:Null}" sap2010:Annotation.AnnotationText="Need to insert a check before saving each invoice to be sure the customer/job name is correct.  Add a log message including Inv#, Amt, Cust#, and Screenshot of Cust/Job field.  &quot;Submitting Invoice # for Cust#....&quot;&#xD;&#xA;&#xD;&#xA;Need to have a post check to confirm submission." ClickType="CLICK_SINGLE" Descriptor="[&quot;Target: Button (80,634,104,26)&quot; +&#xD;&#xA;&quot;Anchor: Text '1]' (173,637,10,20)&quot;]" DesignTimeScaleFactor="1" DisplayName="CV Click - Save &amp; New" sap:VirtualizedContainerService.HintSize="400,208" sap2010:WorkflowViewState.IdRef="CvClickWithDescriptor_1" InformativeScreenshot="ab66ded429b1532a304ba1a029a9da43" KeyModifiers="None" MouseButton="BTN_LEFT" Version="V1">
+              <p:CvClickWithDescriptor.CursorPosition>
+                <ui:CursorPosition Position="Center">
+                  <ui:CursorPosition.OffsetX>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:CursorPosition.OffsetX>
+                  <ui:CursorPosition.OffsetY>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:CursorPosition.OffsetY>
+                </ui:CursorPosition>
+              </p:CvClickWithDescriptor.CursorPosition>
+              <p:CvClickWithDescriptor.DesignTimeDescriptor>
+                <uc:CvDescriptor InformativeScreenshot="ab66ded429b1532a304ba1a029a9da43">
+                  <uc:CvDescriptor.Anchors>
+                    <x:Array Type="uc:CvElementDescriptor">
+                      <uc:CvElementDescriptor DesignTimeArea="173, 637, 10, 20" ElementType="Text" Text="1]" />
+                    </x:Array>
+                  </uc:CvDescriptor.Anchors>
+                  <uc:CvDescriptor.Target>
+                    <uc:CvElementDescriptor DesignTimeArea="80, 634, 104, 26" ElementType="Button" />
+                  </uc:CvDescriptor.Target>
+                </uc:CvDescriptor>
+              </p:CvClickWithDescriptor.DesignTimeDescriptor>
+              <p:CvClickWithDescriptor.Target>
+                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" Id="f6d74bab-cdef-4cd4-b725-8706112b2f59">
+                  <ui:Target.TimeoutMS>
+                    <InArgument x:TypeArguments="x:Int32" />
+                  </ui:Target.TimeoutMS>
+                  <ui:Target.WaitForReady>
+                    <InArgument x:TypeArguments="ui:WaitForReady" />
+                  </ui:Target.WaitForReady>
+                </ui:Target>
+              </p:CvClickWithDescriptor.Target>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </p:CvClickWithDescriptor>
+          </Sequence>
+        </ActivityAction>
+      </p:CVScope.Body>
+      <p:CVScope.DesignTimeCache>
+        <uc:CVCache InformativeScreenshot="1db5e1af161da13157a2dba35bc82893" LogicalPosition="1584, -710" OcrText="E AMOUNT A&#xD;&#xA;11&#xD;&#xA;TOTAL&#xD;&#xA;ENTS APPLIED 0.00&#xD;&#xA;muca DUE 0.00&#xD;&#xA;'e a Close I [[ 1] I Clear I" Position="1584, -710" ScreenshotGuid="80c27ce8-cf66-4685-8ce5-8c4f52cecb2a" ServerVersion="1">
+          <uc:CVCache.CvTables>
+            <x:Array Type="uc:CvTableInfo">
+              <uc:CvTableInfo>
+                <uc:CvTableInfo.Columns>
+                  <x:Array Type="x:Int32">
+                    <x:Int32>0</x:Int32>
+                    <x:Int32>16</x:Int32>
+                    <x:Int32>284</x:Int32>
+                  </x:Array>
+                </uc:CvTableInfo.Columns>
+                <uc:CvTableInfo.Rows>
+                  <x:Array Type="x:Int32">
+                    <x:Int32>2</x:Int32>
+                    <x:Int32>23</x:Int32>
+                    <x:Int32>46</x:Int32>
+                    <x:Int32>68</x:Int32>
+                    <x:Int32>91</x:Int32>
+                    <x:Int32>114</x:Int32>
+                    <x:Int32>137</x:Int32>
+                    <x:Int32>160</x:Int32>
+                    <x:Int32>183</x:Int32>
+                    <x:Int32>206</x:Int32>
+                    <x:Int32>228</x:Int32>
+                    <x:Int32>250</x:Int32>
+                    <x:Int32>273</x:Int32>
+                    <x:Int32>295</x:Int32>
+                    <x:Int32>318</x:Int32>
+                    <x:Int32>342</x:Int32>
+                    <x:Int32>365</x:Int32>
+                    <x:Int32>388</x:Int32>
+                    <x:Int32>411</x:Int32>
+                    <x:Int32>433</x:Int32>
+                    <x:Int32>456</x:Int32>
+                    <x:Int32>479</x:Int32>
+                    <x:Int32>508</x:Int32>
+                  </x:Array>
+                </uc:CvTableInfo.Rows>
+              </uc:CvTableInfo>
+            </x:Array>
+          </uc:CVCache.CvTables>
+          <uc:CVCache.CvUiElements>
+            <scg:List x:TypeArguments="uc:CvElementInfo" Capacity="64">
+              <uc:CvElementInfo Category="Button" Region="195, 635, 104, 26" />
+              <uc:CvElementInfo Category="Button" Region="80, 634, 104, 26" />
+              <uc:CvElementInfo Category="ArrowButton" Region="282, 23, 17, 15" />
+              <uc:CvElementInfo Category="ArrowButton" Region="282, 495, 18, 19" />
+              <uc:CvElementInfo Category="Cell" Region="0, 318, 16, 24" />
+              <uc:CvElementInfo Category="Cell" Region="0, 342, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 23, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 479, 268, 29" />
+              <uc:CvElementInfo Category="Cell" Region="0, 183, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 365, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 160, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 137, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 295, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 318, 268, 24" />
+              <uc:CvElementInfo Category="Cell" Region="16, 433, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 295, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 456, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 342, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 68, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 388, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 137, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 365, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 250, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 273, 268, 22" />
+              <uc:CvElementInfo Category="Cell" Region="16, 68, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 23, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 91, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 411, 268, 22" />
+              <uc:CvElementInfo Category="Cell" Region="0, 114, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 46, 268, 22" />
+              <uc:CvElementInfo Category="Cell" Region="0, 46, 16, 22" />
+              <uc:CvElementInfo Category="Cell" Region="16, 228, 268, 22" />
+              <uc:CvElementInfo Category="Cell" Region="0, 388, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 206, 16, 22" />
+              <uc:CvElementInfo Category="Cell" Region="16, 183, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 228, 16, 22" />
+              <uc:CvElementInfo Category="Cell" Region="0, 433, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 160, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 114, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="16, 206, 268, 22" />
+              <uc:CvElementInfo Category="Cell" Region="0, 273, 16, 22" />
+              <uc:CvElementInfo Category="Cell" Region="0, 411, 16, 22" />
+              <uc:CvElementInfo Category="Cell" Region="16, 91, 268, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 250, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 479, 16, 29" />
+              <uc:CvElementInfo Category="Cell" Region="0, 456, 16, 23" />
+              <uc:CvElementInfo Category="Cell" Region="0, 2, 16, 21" />
+              <uc:CvElementInfo Category="Button" Confidence="Runtime" Region="0, 635, 70, 25" />
+              <uc:CvElementInfo Category="Icon" Confidence="Runtime" Region="9, 641, 11, 12" />
+              <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="19, 25, 269, 21" />
+              <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="9, 439, 272, 23" />
+              <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="15, 462, 261, 24" />
+              <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="6, 205, 283, 30" />
+              <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="5, 117, 277, 22" />
+              <uc:CvElementInfo Category="InputBox" Confidence="Runtime" Region="5, 392, 274, 25" />
+            </scg:List>
+          </uc:CVCache.CvUiElements>
+          <uc:CVCache.OcrTexts>
+            <scg:List x:TypeArguments="uc:OcrTextInfo" Capacity="32">
+              <uc:OcrTextInfo Region="15, 8, 2, 10" Text="E" />
+              <uc:OcrTextInfo Region="23, 11, 45, 7" Text="AMOUNT" />
+              <uc:OcrTextInfo Region="285, 27, 10, 8" Text="A" />
+              <uc:OcrTextInfo Region="284, 497, 13, 16" Text="11" />
+              <uc:OcrTextInfo Region="34, 566, 28, 7" Text="TOTAL" />
+              <uc:OcrTextInfo Region="0, 585, 20, 7" Text="ENTS" />
+              <uc:OcrTextInfo Region="22, 585, 40, 7" Text="APPLIED" />
+              <uc:OcrTextInfo Region="254, 582, 24, 10" Text="0.00" />
+              <uc:OcrTextInfo Region="0, 605, 39, 7" Text="muca" />
+              <uc:OcrTextInfo Region="42, 605, 20, 7" Text="DUE" />
+              <uc:OcrTextInfo Region="248, 602, 30, 12" Text="0.00" />
+              <uc:OcrTextInfo Region="0, 645, 7, 7" Text="'e" />
+              <uc:OcrTextInfo Region="11, 643, 8, 9" Text="a" />
+              <uc:OcrTextInfo Region="23, 643, 31, 9" Text="Close" />
+              <uc:OcrTextInfo Region="66, 637, 2, 22" Text="I" />
+              <uc:OcrTextInfo Region="82, 637, 10, 22" Text="[[" />
+              <uc:OcrTextInfo Region="173, 637, 10, 20" Text="1]" />
+              <uc:OcrTextInfo Region="197, 637, 3, 22" Text="I" />
+              <uc:OcrTextInfo Region="232, 643, 30, 9" Text="Clear" />
+              <uc:OcrTextInfo Region="296, 637, 2, 22" Text="I" />
+            </scg:List>
+          </uc:CVCache.OcrTexts>
+        </uc:CVCache>
+      </p:CVScope.DesignTimeCache>
+      <p:CVScope.OCREngine>
+        <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd:Rectangle, x:String))">
+          <ActivityFunc.Argument>
+            <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+          </ActivityFunc.Argument>
+          <ui:GoogleOCR AllowedCharacters="{x:Null}" DeniedCharacters="{x:Null}" FilterRegion="{x:Null}" Invert="{x:Null}" Language="{x:Null}" Output="{x:Null}" Profile="{x:Null}" Text="{x:Null}" ComputeSkewAngle="False" DisplayName="Tesseract OCR" ExtractWords="True" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_1" Image="[Image]" Scale="2" />
+        </ActivityFunc>
+      </p:CVScope.OCREngine>
+      <p:CVScope.Target>
+        <ui:Target Element="{x:Null}" Id="86012685-4ff8-46f5-90d1-586c9af8d1b2" InformativeScreenshot="b24a0ee0d68acd489767779d7b9e822a" Selector="&lt;wnd app='qbw32.exe' cls='MauiFrame' title='FBS Demo  - QuickBooks Desktop Pro 2020 - [Create Invoices]' /&gt;" WaitForReady="INTERACTIVE">
+          <ui:Target.ClippingRegion>
+            <ui:Region Rectangle="1582, 378, 304, 675" />
+          </ui:Target.ClippingRegion>
+          <ui:Target.TimeoutMS>
+            <InArgument x:TypeArguments="x:Int32" />
+          </ui:Target.TimeoutMS>
+        </ui:Target>
+      </p:CVScope.Target>
+    </p:CVScope>
+  </Sequence>
+</Activity>
